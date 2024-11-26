@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
+
+    <title>Historique des commandes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+    <div class="mx-auto mt-5 mb-4 text-center">
+        <span class=" alert alert-success">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </span>
+    </div>
+
+    {% endif %}
+    <div class="container">
+        <a class="btn btn-danger mb-4" href="{% url 'vider_historique' %}" onclick="return confirm('Êtes-vous sûr de vouloir vider l\'historique des commandes ?')">Vider l'historique</a>
+        <form method="get" action="{% url 'historique_commandes' %}">
+            <input type="text" name="nom_client" placeholder="Nom du client" value="{{ request.GET.nom_client }}">
+            <input type="text" name="statut_commande" placeholder="Statut de la commande" value="{{ request.GET.statut_commande }}">
+            <input type="date" name="date_creation_debut" placeholder="Date début" value="{{ request.GET.date_creation_debut }}">
+            <input type="date" name="date_creation_fin" placeholder="Date fin" value="{{ request.GET.date_creation_fin }}">
+            <button type="submit">Filtrer</button>
+        </form>
+
+
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom du client</th>
+                    <th>Statut de la commande</th>
+                    <th>Produits et quantités</th>
+                    <th>Prix total</th>
+                    <th>Date de création</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for commande in historique %}
+                <tr>
+                    <td>{{ commande.client.nom }}</td>
+                    <td>{{ commande.statut }}</td>
+                    <td>{{ commande.produits }}</td>
+                    <td>{{ commande.prix_total }}</td>
+                    <td>{{ commande.date_creation }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

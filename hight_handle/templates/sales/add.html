@@ -1,0 +1,159 @@
+{% include 'includes_root/header.html' %}
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <div>
+            <h1 class="h2"><span class="text-muted">Inventaires ></span> <span class="text-muted">Liste des Ventes (10) > Effectuer une Vente</span></h1>
+            <p class="text-info">Tous les champs sont obligatoires sauf mentionnés <span class="text-primary">Optionnels</span></p>
+        </div>
+        </div>
+        <!-- Starting Table -->
+        <div class="container-fluid row py-4">
+            <form action="#" class="form col-md-4 add-panier-form" method="POST">
+                {% csrf_token %}
+                
+                {{ form.errors }}
+                <div class="form-group">
+                    <label for="modality">Modalité</label>
+                        {{ form.modality }}
+                </div>
+
+                <div class="form-group">
+                    <label for="item">Nom du Produit</label>
+                    {{ form.item }}
+                </div>
+
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="quantity_sale">Quantité de Vente</label>
+                        {{ form.quantity_sale }}
+                        {% comment %} <input type="text" name="quantity_sale" class="form-control"> {% endcomment %}
+                    </div>
+                </div>
+
+                <button class="btn btn-outline-primary" type="submit" name="panier">Envoyer dans le panier</button>
+            </form>
+            
+            {% if panier %}
+
+                <div class="col-lg-8">
+                    <h2 class="land text-primary">PANIER</h2>
+                    <table class="table table-striped text-center" id="panier-table">
+                        <thead>
+                            <th>ID</th>
+                            <th>Désignation</th>
+                            <th>Prix Total du Produit</th>
+                            <th>Qty Vendu</th>
+                            <th>Montant de Vente</th>
+                            <th>Code Commande</th>
+                            <th>Modalité</th>
+                            <th>Action</th> 
+                        </thead>
+                
+                        <tbody>
+                            <tr>
+                                <td>#1</td>
+                                <td>Paracétamol</td>
+                                <td>3000</td>
+                                <td>2</td>
+                                <td>6000</td>
+                                <td># 1</td>
+                                <td>Détail</td>
+                                <td><a href="#" class="retirer btn btn-danger">Retirer</a></td>
+                            </tr>
+                        </tbody>   
+                    </table>
+                    
+                    <form action="#" method="POST">
+                        {{ csrf_token }}
+                        <div class="form-group">
+                            <label class="text-secondary h5">Nom du Client</label><br>
+                            <input type="text" name="nom_client" class="form-control"><br>
+                            <small>
+                                Champ Facultatif
+                            </small>
+                        </div>
+                
+                        <div class="form-group">
+                            <label class="text-secondary h5">Adresse du Client</label><br>
+                            <input type="text" name="adresse_client" class="form-control"><br>
+                            <small>
+                                Champ Facultatif
+                            </small>
+                        </div>
+                
+                        <div class="form-group">
+                            <label class="text-secondary h5">Appliquer une remise</label><br>
+                            <input type="text" name="remise" class="form-control">
+                        </div>
+                
+                        <div class="form-group">
+                            <label class="text-secondary h5">Montant remise : </label>
+                            <input type="text" disabled value="1000 GNF'" class="form-control">        
+                        </div>
+                
+                        <div class="form-group">
+                            <label class="text-secondary h5" id="h5">Montant Total : </label>
+                            <input type="text" disabled value="5000 GNF" class="form-control">        
+                        </div>
+                
+                        <button type='submit' name='valider' class="btn btn-primary">VALIDER</button>
+                    </form>                      
+                </div>
+            {% endif %}
+        </div>
+    </main>
+
+{% include 'includes_root/footer.html' %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Ajout d'un gestionnaire d'événements pour chaque formulaire d'ajout au panier
+        const forms = document.querySelectorAll('.add-panier-form');
+        forms.forEach(form => {
+            console.log(forms)
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Récupérer les données du formulaire
+                const formData = new FormData(form);
+                
+                // Envoyer une requête POST pour ajouter le produit au panier
+                fetch('', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Mettre à jour le tableau du panier
+                    const panierTable = document.getElementById('panier-table');
+                    //let panierTableBody = panierTable.tBodies[0];
+                    //if (!panierTableBody) {
+                    //    panierTableBody = document.createElement('tbody');
+                     //   panierTable.appendChild(panierTableBody);
+                    //}
+
+                    // Vider le corps du tableau actuel
+                    // panierTableBody.innerHTML = '';
+                    
+                    let panierTableBody = panierTable.querySelector('tr')
+                    // Ajouter les lignes du panier mises à jour
+                    data.items_panier.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${item.item.name}</td>
+                            <td>${item.quantity}</td>
+                            <td>${item.price_sale_item}</td>
+                            <td>${item.total_item}</td>
+                        `;
+                        console.log (item)
+                        panierTableBody.appendChild(row);
+                    });
+                    // Mettre à jour le total
+                    const totalElement = document.getElementById('h5');
+                    totalElement.textContent = 'Total : ' + data.total;
+
+
+                });
+            });
+        });
+    });
+</script>

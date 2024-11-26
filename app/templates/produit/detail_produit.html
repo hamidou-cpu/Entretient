@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+.product-detail {
+  text-align: center;
+}
+
+.product-detail img {
+  display: inline-block;
+  max-width: 100%; /* Redimensionne l'image pour qu'elle ne dépasse pas la largeur de son conteneur */
+  max-height: 50vh; /* Définit une hauteur maximale pour l'image */
+  margin: 0 auto;
+  margin-top: 80px;
+  transition: transform 0.3s ease;
+}
+</style>
+  <div class="product-detail">
+    {% if produit %}
+      <img src="{{ produit.image.url }}" alt="{{ produit.nom }}">
+      <h2>{{ produit.nom }}</h2>
+      <p><strong>Tag:</strong> {% for tag in produit.tag.all %}{{ tag.nom }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+      <p><strong>Quantité en stock:</strong> {{ produit.quantite_en_stock }}</p>
+      <p><strong>Prix:</strong> {{ produit.prix }} €</p>
+      <p><strong>Description:</strong> {{ produit.description }}</p>
+    {% else %}
+      <p>Produit non trouvé.</p>
+    {% endif %}
+  </div>
+{% endblock %}
+

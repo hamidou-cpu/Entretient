@@ -1,0 +1,65 @@
+{% include 'includes_root/header.html' %}
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <div>
+                <h1 class="h2"><span class="text-muted">Stock ></span><span class="text-muted">Liste des Stocks ></span> Ajout d'un Stock</h1>
+                <p class="text-info">Tous les champs sont obligatoires sauf ceux mentionnés <span class="text-primary">Optionnels</span></p>
+            </div>
+        </div>
+        <!-- Starting Form -->
+        <div class="row bg-light oy-5">
+            <div class="col-md-6">
+                <form action="" method="POST" class="form py-5">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="name">Nom du Produit</label>
+                        <select name="name" class="form-control">
+                            <option value="">Choisissez un Produit</option>
+                            {% for item in items %}
+                                <option value="{{ item.id }}">{{ item.name }}</option>
+                            {% endfor %}    
+                        </select>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="contact">Prix de Vente Unitaire</label>
+                        <input type="number" class="form-control" name="price_sale">
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="price_buy">Prix d'Achat Unitaire</label>
+                        <input type="number" class="form-control" name="price_buy">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantity_stored">Quantité en Stock</label>
+                        <input type="number" class="form-control" name="quantity_stored">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date_expired">Date de Peremption</label>
+                        <input type="date" class="form-control" name="date_expired">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adress">Fournisseur</label>
+                        <select name="id_fournisseur" id="" class="form-control">
+                            {% for founisseur in fournisseurs %}
+                                <option value="{{ fournisseur.id }}">{{ fournisseur.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+    
+                    <button class="btn btn-outline-primary">Envoyer</button>
+                </form>
+            </div>
+
+            <!-- Starting Panier -->
+            <div class="col-md-6">
+
+            </div>
+        </div>
+    </main>
+
+{% include 'includes_root/footer.html' %}

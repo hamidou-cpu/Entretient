@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rapport des Commandes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+        .card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        .card h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .card p {
+            font-size: 1.2em;
+            color: #555;
+            margin: 10px 0;
+        }
+        .card strong {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Rapport des Commandes</h1>
+        <p>Commandes en instance: <strong>{{ commandes_en_instance }}</strong></p>
+        <p>Commandes non livrées: <strong>{{ commandes_non_livrees }}</strong></p>
+        <p>Commandes livrées: <strong>{{ commandes_livrees }}</strong></p>
+    </div>
+</body>
+</html>

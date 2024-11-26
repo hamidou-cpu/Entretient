@@ -1,0 +1,64 @@
+{% include 'includes_root/header.html' %}
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <div>
+                <h1 class="h2"><span class="text-muted">Inventaires ></span> <span class="text-muted">Liste des Articles (10) > Editer un Article</span></h1>
+                <p class="text-info">Tous les champs sont obligatoires sauf mentionnés <span class="text-primary">Optionnels</span></p>
+            </div>
+        </div>
+        <!-- Starting Table -->
+        <div class="container-fluid py-4">
+            <form action="" class="form" method="POST">
+                {% csrf_token %}
+                
+                {{ form.errors }}
+                <div class="form-group">
+                    <label for="name">Nom de l'Article</label>
+                    {{ form.name }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_category">Catégorie</label>
+                    <select name="id_category" class="form-control">
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.description }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="shape">Forme de l'Article</label>
+                    <select name="shape" class="form-control">
+                        {% for shape in shapes %}
+                            <option value="{{ shape.id }}">{{ shape.shape }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_modality">Modalité</label>
+                    <select name="id_modality" class="form-control">
+                        {% for modality in modalities %}
+                            <option value="{{ modality.id }}">{{ modality.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="using">Comment Utiliser <span class="badge text-primary">Optionnel</span></label>
+                    {{ form.using }}
+                </div>
+
+                <div class="form-group">
+                    <label for="secondary_repercutions">Effets Secondaires <span class="badge text-primary">Optionnel</span></label>
+                    {{ form.secondary_repercutions }}
+                </div>
+
+                <button class="btn btn-outline-primary">Envoyer</button>
+
+            </form>
+        </div>
+    </main>
+
+{% include 'includes_root/footer.html' %}

@@ -1,0 +1,47 @@
+<style>
+  .produit {
+    float: left;
+    width: 15%; /* Réglez la largeur des produits selon vos besoins */
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+    transition: transform 0.3s; /* Ajoute une transition fluide */
+  }
+
+  .produit:hover {
+    transform: scale(1.05); /* Agrandit légèrement l'élément au survol */
+  }
+
+  .produit img {
+    max-width: 100%; /* Assurez-vous que les images ne dépassent pas la largeur de leur conteneur */
+    height: auto;
+  }
+
+  /* Clearfix pour gérer les flottants */
+  .clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+</style>
+
+<!-- Barre de recherche -->
+<form method="GET" action="{% url 'liste_produit' %}">
+  <input type="text" name="q" placeholder="Rechercher un produit">
+  <button type="submit">Rechercher</button>
+</form>
+
+<div class="clearfix">
+  {% for produit in produits %}
+    <div class="produit">
+      {% if produit.image %}
+        <img src="{{ produit.image.url }}" alt="{{ produit.nom }}">
+      {% endif %}
+      <h3>{{ produit.nom }}</h3>
+      <p>Quantité en stock: {{ produit.quantite_en_stock }}</p>
+      <p>Prix: {{ produit.prix }} €</p>
+      <a href="{% url 'detail_produit' produit.id %}">detail</a>
+    </div>
+  {% endfor %}
+</div>

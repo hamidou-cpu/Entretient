@@ -1,0 +1,48 @@
+{% include 'includes_root/header.html' %}
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <div>
+                <h1 class="h2"><span class="text-muted">Inventaires ></span> Liste des Articles (10)</h1>
+                <p class="text-info">Vue du listing des Articles au sein de la company</p>
+            </div>
+            <a href="{% url 'items:add' %}" class="btn btn-sm btn-outline-info w-25">Ajouter</a>
+        </div>
+        <!-- Starting Table -->
+        <h2>Bar de Recherche</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm text-center">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nom du Produit</th>
+                        <th>Forme du Produit </th>
+                        <th>Catégorie du Produit</th>
+                        <th>Stock Disponible</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                        {% for item in items %}
+                            <tr>
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.shape }}</td>
+                                <td>{{ item.id_category }}</td>
+                                <td>{{ item.storage_disponible }}</td>
+                                <td class="btn btn-group">
+                                    <a href="{% url 'items:edit' item.id %}" class="btn btn-outline-primary">Editer</a>
+                                    <a href="{% url 'items:remove' item.id  %}" class="btn btn-outline-danger">Supprimer</a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <div class="d-flex justify-content-center text-center alert alert-info">
+                                <p>Aucun Résultat Trouvé</p>
+                            </div>
+                        {% endfor%}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+{% include 'includes_root/footer.html' %}

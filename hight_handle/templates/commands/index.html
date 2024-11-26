@@ -1,0 +1,47 @@
+{% include 'includes_root/header.html' %}
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <div>
+                <h1 class="h2"><span class="text-muted">Stock ></span> Liste des Stocks (10)</h1>
+                <p class="text-info">Vue du listing de Stocks au sein de la company</p>
+            </div>
+            <a href="{% url 'commands:add' %}" class="btn btn-sm btn-outline-info w-25">Ajouter</a>
+        </div>
+        <!-- Starting Table -->
+        <h2>Bar de Recherche</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm text-center">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre (s) de Produit</th>
+                        <th>Qty Total Inscript</th>
+                        <th>Etat Actuel</th>
+                        <th>Date de Livraison</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                        {% for command in commands %}
+                            <tr>
+                                <td>{{ command.id }}</td>
+                                <td>{{ command.item_length }}</td>
+                                <td>{{ command.quantity_stored }}</td>
+                                <td>{{ '2' }}</td>
+                                <td>{{ command.date_livraison }}</td>
+                                <td class="btn btn-group">
+                                    <a href="{% url 'commands:see_more' command.id %}" class="btn btn-outline-info">Voir Plus</a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <div class="d-flex justify-content-center text-center alert alert-info">
+                                <p>Aucun Résultat Trouvé</p>
+                            </div>
+                        {% endfor%}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+{% include 'includes_root/footer.html' %}

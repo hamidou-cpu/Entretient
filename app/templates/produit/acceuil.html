@@ -1,0 +1,215 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<style>
+    .user-greeting {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #007bff;
+        margin-left: 4px;
+    }
+
+    .logout-button {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 1em;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+
+    .logout-button:hover {
+        background-color: #c82333;
+    }
+
+    .filter-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .filter-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+<br>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <div>
+        {% if user.is_authenticated %}
+            <p class="user-greeting">Bonjour, {{ user.username }}!</p>
+        {% endif %}
+    </div>
+    <div>
+        {% if user.is_authenticated %}
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="logout-button">Déconnexion</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    {% if messages %}
+        <span class="mt-4 mx-auto text-center">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </span>
+    {% endif %}
+    <div class="col-md-5">
+        <h5>Clients:</h5>
+<hr>
+<div class="card card-body">
+    <a class="btn btn-primary btn-sm btn-block" href="{% url 'creer_client' %}">Créer Un Client</a>
+    <table class="table table-sm">
+        <tr>
+            <th>ID</th>
+            <th>Clients</th>
+            <th>Telephone</th>
+            <th>Catégorie</th>
+            <th>Détails</th>
+        </tr>
+
+        {% for client in clients %}
+        <tr>
+            <th><a href="{% url 'client' client.id %}">{{ client.id }}</a></th>
+            <th>{{ client.nom }}</th>
+            <th>{{ client.telephone }}</th>
+            <th>{{ client.get_categorie_display }}</th>
+            <th><a class="btn btn-success" href="{% url 'client' client.id %}">Détails</a></th>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+    </div>
+
+    <div class="col-md-7">
+        <h5>Toutes les Comamndes</h5>
+        <hr>
+        <div class="card card-body">
+            <table>
+                <tr><a href="{% url 'historique_commandes' %}">historique</a></tr>
+                <tr>
+                    <th>
+                        <form action="" method="get">
+                        <label for="status_filter">Filtrer par statut :</label>
+                        <select name="status" id="status_filter" class="filter-button">
+                            <option value="">Tous les statuts</option>
+                            <option value="en instance">En instance</option>
+                            <option value="non livré">Non livré</option>
+                            <option value="livré">Livré</option>
+                        </select>
+
+                        <label for="client_filter">Filtrer par client :</label>
+                        <select name="client" id="client_filter" class="filter-button">
+                            <option value="">Tous les clients</option>
+                            {% for client in clients %}
+                                <option value="{{ client.nom }}">{{ client.nom }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <button type="submit" class="filter-button">Filtrer</button>
+                        </form>
+                    </th>
+                </tr>
+            </table>
+            <a class="btn btn-primary btn-sm btn-block" href="{% url 'ajout_commande' %}">Ajouter une Commande</a>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Client</th>
+                        <th>Status</th>
+                        <th>Date de création</th>
+                        <th>Modifier</th>
+                        <th>Supprimer</th>
+                        <th>Prix</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for commande in commandes %}
+<tr>
+    <td>
+        {% for commande_produit in commande.commandeproduit_set.all %}
+            {% if commande_produit.quantite_commandee > 0 %}
+                {{ commande_produit.produit.nom }} ({{ commande_produit.quantite_commandee }}) - {{ commande_produit.produit.prix }}€
+            {% endif %}
+        {% endfor %}
+    </td>
+    <td>{{ commande.client }}</td>
+    <td>
+        <form method="post" action="{% url 'modifier_statut_commande' commande.id %}">
+            {% csrf_token %}
+            <select name="status" onchange="this.form.submit()">
+                {% for choice in commande.STATUS %}
+                    <option value="{{ choice.0 }}" {% if choice.0 == commande.status %}selected{% endif %}>
+                        {{ choice.1 }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    </td>
+    <td>{{ commande.date_creation }}</td>
+    <td>
+        <a class="btn btn-primary" href="{% url 'modifier_commande' commande.id %}">Modifier</a>
+    </td>
+    <td>
+        <a class="btn btn-danger" href="{% url 'supprimer_commande' commande.id %}" onclick="return confirm('Etes vous sûr de cette action')">Supprimer</a>
+    </td>
+    <td>{{ commande.prix_total }}€</td>
+</tr>
+{% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        // Les données et labels devraient être dynamiquement générés en fonction de vos données de la base de données.
+        const data = {
+            labels: ['En instance', 'Non livré', 'Livré'],
+            datasets: [{
+                label: 'Statut des Commandes',
+                data: [5, 10, 2], // Remplacer par les données réelles
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(75, 192, 192, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        const commandeChart = new Chart(
+            document.getElementById('commandeChart'),
+            config
+        );
+    </script>
+    
+</div>
+
+{% endblock %}

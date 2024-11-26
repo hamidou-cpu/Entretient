@@ -1,0 +1,175 @@
+{% include 'includes_root/header.html' %}
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        <pre>
+            {{ dump }}
+        </pre>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h1 class="h2">Tableau de Bord</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group mr-2">
+                    <button class="btn btn-sm btn-outline-secondary">Archiver</button>
+                </div>
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                <span data-feather="calendar"></span>
+                {% now 'Y' %}
+                </button>
+            </div>
+        </div>
+        <!-- Content of first Box (Box 1) -->
+
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="card col-md-3 p-0 mr-1">
+               <div class="card-body text-center">
+                    <img src="" alt="Vente">
+                    <h4 class="small">Dernières Ventes</h4>
+                    <marquee direction="left">{{ last_sale.id_medecine }} {{ last_sale.code_sale.date_sale }}</marquee>
+               </div>
+    
+               <div class="card-footer text-center">
+                    <a href="#">VOIR PLUS</a>
+               </div>
+            </div>
+    
+            <div class="card col-md-3 p-0 mr-1"> 
+                <div class="card-body text-center p-0">
+                    <img src="#" alt="Revenus">
+                    <div class="d-flex align-items-center">
+                        <div class="col-6">
+                            <h4 class="lead">Revenus</h4>
+                            <p class="small">1,000 GNF</p>
+                        </div>
+    
+                        <form action="" class="col-6 my-4" method="get">
+                            <div class="form-group">
+                                <select name="month_revenu" class="months_revenu form-control">
+                                        <option value="">Jan</option>
+                                        <option value="">Fév</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+    
+                <div class="card-footer text-center">
+                    <a href="#">VOIR PLUS</a>
+                </div>
+            </div>
+    
+            <div class="card col-md-3 p-0 mr-1">
+               <div class="card-body text-center">
+                    <img src="#" alt="Articles">
+                    <h4 class="small">{{ items|length }}</h4>
+                    <p class="small">Articles Disponibles</p>
+               </div>
+    
+               <div class="card-footer text-center">
+                    <a href="#">VOIR PLUS</a>
+               </div>
+            </div>
+    
+            <div class="card col-md-3 p-0 mr-1">
+                <div class="card-body text-center">
+                    <img src="" alt="Alerte">
+                    <h4 class="small">1</h4>
+                    <p class="small">Alerte Stock</p>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="#">VOIR PLUS</a>
+                </div>
+            </div>
+        
+        </div>
+        <!-- Content of second Box (Box 2) -->
+        <div class="container-fluid row py-5 bg-light my-5">
+            <div class="card p-0 col-md-6">
+                <div class="card-header d-flex justify-content-between">
+                    <h4>Inventaires</h4>
+                    <form action="" method="get">
+                        <select class="months_second form-control" name="month_inventaire">
+                            <option value="">Janvier</option>
+                            <option value="">Février</option>
+                        </select>
+                    </form>
+                </div>
+        
+                <div class="card-body d-flex justify-content-between">
+                    <div class="card-left">
+                        <h2>10</h2>
+                        <p>QUANTITE VENDU</p>
+                    </div>
+        
+                    <div class="card-right">
+                        <h2>2</h2>
+                        <p>Catégories</p>
+                    </div>
+                </div>
+            </div>
+        
+            
+            <div class="card p-0 col-md-6">
+                <div class="card-header d-flex justify-content-between">
+                    <h4>Etat de l'entité</h4>
+                    <strong>10 Jan 2023</strong>
+                </div>
+                
+                <div class="card-body d-flex justify-content-between">
+                    <div class="card-left">
+                        <h2>10</h2>
+                        <p>Qty Non Epuisé</p>
+                    </div>
+        
+                    <div class="card-right">
+                        <h2>2</h2>
+                        <p>Catégories</p>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="card p-0 col-md-6">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <a href="#" class="btn btn-outline-primary"><h4>Produits Dormants</h4></a>
+                    <strong>10/10/2023</strong>
+                </div>
+        
+                <div class="card-body d-flex justify-content-between">
+                    <div class="card-left">
+                        <h2>2</h2>
+                        <p>Nombre de produits</p>
+                    </div>
+        
+                    <div class="card-right">
+                        <h2>2</h2>
+                        <p>Catégories</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card p-0 col-md-6">
+                <div class="card-header d-flex justify-content-between">
+                   <a href="#" class="btn btn-outline-primary"><h4>Fournisseurs</h4></a>
+                    <form action="" method="get">
+                        <select id="" class="month form-control">
+                            <option value="">Jan</option>
+                        </select>
+                    </form>
+                </div>
+        
+                <div class="card-body d-flex justify-content-between">
+                    <div class="card-left">
+                        <h2>10</h2>
+                        <p>Quantié Articles Fournis</p>
+                    </div>
+        
+                    <div class="card-right">
+                        <h2>10</h2>
+                        <p>Fournisseurs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Content Box 2 -->
+        
+    </main>
+
+{% include 'includes_root/footer.html' %}

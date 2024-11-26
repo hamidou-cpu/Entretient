@@ -1,0 +1,48 @@
+{% include 'includes_root/header.html' %}
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        <div class="container-fluid py-4">
+            <h3>Détails du Stock</h3>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-sm text-center">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Désignation</th>
+                            <th>PAU</th>
+                            <th>PVU</th>
+                            <th>Modalité</th>
+                            <th>Quantité</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for command in commands_items %}
+                            <tr>
+                                <td>{{ command.id }}</td>
+                                <td>{{ command.id_medecine }}</td>
+                                <td>{{ command.price_buy }}</td>
+                                <td>{{ command.price_sale }}</td>
+                                <td>{{ command.id_medecine.id_category }}</td>
+                                <td>{{ command.quantity_stored }}</td>
+                                <td class="btn btn-group">
+                                    <a href="{% url 'commands:edit' command.id %}" class="btn btn-outline-primary">Editer le Produit</a>
+                                    <a href="{% url 'commands:edit' command.id %}" class="btn btn-outline-danger">Annuler le Produit</a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <div class="d-flex justify-content-center text-center alert alert-info">
+                                <p>Aucun Résultat Trouvé</p>
+                            </div>
+                        {% endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="btn-group">
+            <a href="#" class="btn btn-outline-danger">Annuler la commande</a>
+            <a href="#" class="btn btn-info">Imprimer</a>
+        </div>
+    </main>
+
+{% include 'includes_root/footer.html' %}

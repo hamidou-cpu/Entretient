@@ -1,0 +1,31 @@
+{% include 'includes_root/header.html' %}
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <div>
+                <h1 class="h2"><span class="text-muted">Statistiques ></span> Statistiques des Vendeurs</h1>
+                <p class="text-info">Vue des Statistiques de Vendeurs/p>
+            </div>
+            <a href="#" class="btn btn-sm btn-outline-info w-25 disabled">Télécharger le Rapport</a>
+        </div>
+        <!-- Starting Table -->
+        <h2>Bar de Recherche Intervale</h2>
+        <div class="container bg-light py-5 row">
+            <div class="col-md-8 justify-content-center">
+                <canvas class="my-4" id="myChart" width="900" height="400"></canvas>
+            </div>
+            
+        </div>
+
+        <div class="container-fluid py-5">
+            <div class="card">
+                <div class="card-body">
+                    {{ dump }}
+                </div>
+            </div>
+       </div>
+
+    </main>
+
+
+{% include 'includes_root/footer.html' %}

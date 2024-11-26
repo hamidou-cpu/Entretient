@@ -1,0 +1,62 @@
+<h1>PANIER</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Désignation</th>
+        <th>Prix du Produit</th>
+        <th>Qty Vendu</th>
+        <th>Montant de Vente</th>
+        <th>Code Commande</th>
+        <th>Modalité</th>
+        <th>Action</th> 
+    </tr>
+    {% for item in produits %}
+    <tr>
+        <td>{{ item.produit.id }}</td>
+        <td>{{ item.produit.name }}</td>
+        <td>{{ item.produit.prix }}</td>
+        <td>{{ item.quantity_sale }}</td>
+        <td>{{ item.produit.prix * item.quantity_sale }}</td>
+        <td>{{ item.code_command }}</td>
+        <td>{{ item.modality }}</td>
+        <td><a href="#" class="retirer btn btn-danger">Retirer</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<form method="post" action="{% url 'confirm_sale' %}">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="id_client">Sélectionner un client :</label>
+        <select name="id_client" id="id_client">
+            {% for client in clients %}
+            <option value="{{ client.id }}">{{ client.name }} - {{ client.adress}}</option>
+            {% endfor %}
+        </select>
+        <small class="text-dark">
+            Champ Facultatif
+        </small>
+    </div>
+
+    <div class="form-group">
+        <label class="text-secondary h5">Appliquer une remise</label><br>
+        <input type="text" name="remise" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label class="text-secondary h5">Montant remise : </label>
+        <input type="text" disabled value="1000 GNF'" class="form-control">        
+    </div>
+
+    <div class="form-group">
+        <label class="text-secondary h5">Montant Total : </label>
+        <input type="text" disabled value="{{ total }}" class="form-control">        
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Confirmer la vente">
+    </div>
+
+</form>

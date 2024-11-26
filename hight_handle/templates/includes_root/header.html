@@ -1,0 +1,126 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" content-type="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Hight_Stock">
+    <meta name="author" content="Mamadou Yaya">
+    <title>Dashboard</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profil.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 m-0" href="#">Company name</a>
+      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+           <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">Déconnexion</button>
+                </form>
+            </div>
+          <a class="nav-link text-warning" href="{% url 'dashboard:profile' %}">PROFIL</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'dashboard:index' %}">
+                  <span data-feather="home"></span>
+                  Tableau de Bord <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'commands:index' %}">
+                  <span data-feather="file"></span>
+                  Stock
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="shopping-cart"></span>
+                  Contactez-Nous
+                </a>
+              </li>
+            </ul>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Statistiques</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+                <span data-feather="plus-circle"></span>
+              </a>
+            </h6>
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'sales:statistics_view' %}">
+                  <span data-feather="file-text"></span>
+                  Ventes
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'commands:statistics' %}">
+                  <span data-feather="file-text"></span>
+                  Commandes
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'sales:statistics_salers' %}">
+                  <span data-feather="file-text"></span>
+                  Vendeurs
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'items:statistics' %}">
+                  <span data-feather="file-text"></span>
+                  Articles
+                </a>
+              </li>
+            </ul>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                <span>Inventaires</span>
+                <a class="d-flex align-items-center text-muted" href="#">
+                  <span data-feather="plus-circle"></span>
+                </a>
+              </h6>
+              <ul class="nav flex-column mb-2">
+                <li class="nav-item">
+                  <a class="nav-link {% if 1 == 1 %}active{% else %}{% endif %}" href="{% url 'items:index' %}">
+                    <span data-feather="file-text"></span>
+                    Articles
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'commands:fournisseur' %}">
+                    <span data-feather="file-text"></span>
+                    Fournisseurs
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'sales:index' %}">
+                    <span data-feather="file-text"></span>
+                    Ventes
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'items:category' %}">
+                    <span data-feather="file-text"></span>
+                    Catégorie Articles
+                  </a>
+                </li>
+              </ul>
+          </div>
+        </nav>
+
+

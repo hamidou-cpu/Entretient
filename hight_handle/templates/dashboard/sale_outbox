@@ -1,0 +1,64 @@
+<div class="panier p-3">
+    <h2 class="land text-primary">Panier</h2>
+    <table class="table table-striped text-center">
+        <thead>
+            <th>ID</th>
+            <th>Désignation</th>
+            <th>Prix Total du Produit</th>
+            <th>Qty Vendu</th>
+            <th>Montant de Vente</th>
+            <th>Code Commande</th>
+            <th>Modalité</th>
+            <th>Action</th> 
+        </thead>
+
+        <tbody>
+            <tr>
+                <th>#1</th>
+                <th>Paracétamol</th>
+                <th>3000</th>
+                <th>2</th>
+                <th>6000</th>
+                <th># 1</th>
+                <th>Détail</th>
+                <td><a href="#" class="retirer btn btn-danger">Retirer</a></td>
+            </tr>
+        </tbody>   
+    </table>
+
+    <form action="#" method="POST">
+        {{ csrf_token }}
+        <div class="form-group">
+            <label class="text-secondary h5">Nom du Client</label><br>
+            <input type="text" name="nom_client" class="form-control"><br>
+            <small>
+                Champ Facultatif
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label class="text-secondary h5">Adresse du Client</label><br>
+            <input type="text" name="adresse_client" class="form-control"><br>
+            <small>
+                Champ Facultatif
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label class="text-secondary h5">Appliquer une remise</label><br>
+            <input type="text" name="remise" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label class="text-secondary h5">Montant remise : </label>
+            <input type="text" disabled value="1000 GNF'" class="form-control">        
+        </div>
+
+        <div class="form-group">
+            <label class="text-secondary h5">Montant Total : </label>
+            <input type="text" disabled value="5000 GNF" class="form-control">        
+        </div>
+
+        <button type='submit' name='valider' class="btn btn-primary">VALIDER</button>
+    </form>                      
+</div>

@@ -1,0 +1,58 @@
+{% include 'configuration/includes/header.html' %}
+
+<style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+  
+    .card {
+      width: 23rem;
+      height: auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease;
+      background-color: rgba(255, 255, 255, 0.9); /* Couleur de fond avec opacité */
+    }
+  
+    .card:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+
+<div>
+    
+</div>
+
+<div class="card">
+    <div class="card-body bg-light center">
+        <h5 class="card-title text-center">Connexion</h5>
+        <hr>
+        {% if messages %}
+        <div class="mx-auto mt-4">
+            <ul class="messages">
+                {% for message in messages %}
+                    <span class="alert alert-danger">{{ message }}</span>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <form method="post" class="form mt-4 text-center">
+            {% csrf_token %}
+            <div class="form-group text-center mb-3">
+                <label for="exampleFormControlInput1" class="mx-auto mb-2">Nom d'utilisateur</label>
+                <input type="text" class="form-control text-center" id="exampleFormControlInput1" placeholder="Nom d'utilisateur" name="username" required>
+            </div>
+            <div class="form-group mb-3 text-center">
+                <label for="exampleFormControlPassword1" class="mx-auto mb-2">Mot de passe</label>
+                <input type="password" class="form-control text-center" id="exampleFormControlPassword1" placeholder="Mot de passe" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary mx-auto">Connexion</button>
+            {{ form.errors }}
+        </form>
+    </div>
+</div>
+
+  
